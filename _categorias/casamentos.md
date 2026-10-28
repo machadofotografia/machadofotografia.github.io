@@ -7,4 +7,6 @@ modo: ensaios
 destaque_home: true
 descricao: Histórias reais contadas por ensaio — celebrações de amor, família e
   momentos únicos que merecem ser revividos para sempre.
+fotos:
+  - /media/istockphoto-1979951980-1024x1024-1.jpg
 ---
