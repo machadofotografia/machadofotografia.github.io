@@ -1,5 +1,5 @@
 ---
-title: MARIANA & RAMON
+title: MARIA ALICE & RAMON
 categoria: _categorias/casamentos.md
 capa: /media/casamento-41-1.jpg
 data: 2025-02-26
