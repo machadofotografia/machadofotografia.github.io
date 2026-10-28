@@ -1,0 +1,54 @@
+---
+layout: default
+---
+{% assign parent_cat = site.categorias | where: "path", page.categoria | first %}
+
+<article class="ensaio-page">
+  <div class="container container--wide">
+    <header class="editorial-header reveal-item">
+      <div class="editorial-header__meta">
+        {% if parent_cat %}
+          <a href="{{ parent_cat.url | relative_url }}" class="editorial-header__back">← {{ parent_cat.title | upcase }}</a>
+        {% endif %}
+        {% if page.data %}
+          <span>{{ page.data | date: "%d.%m.%Y" }}</span>
+        {% endif %}
+        {% if page.local and page.local != "" %}
+          <span>{{ page.local }}</span>
+        {% endif %}
+      </div>
+
+      <h1 class="editorial-header__title">{{ page.title }}</h1>
+
+      {% if page.descricao and page.descricao != "" %}
+        <p class="editorial-header__desc">{{ page.descricao }}</p>
+      {% endif %}
+    </header>
+
+    {% include masonry.html fotos=page.fotos title=page.title %}
+
+    {% if parent_cat %}
+      {% assign sibling_ensaios = site.ensaios | where: "categoria", page.categoria | sort: "data" | reverse %}
+      {% if sibling_ensaios.size > 1 %}
+        <nav class="ensaio-pagination reveal-item" aria-label="Navegação entre ensaios">
+          {% for item in sibling_ensaios %}
+            {% if item.url == page.url %}
+              {% assign next_index = forloop.index0 | plus: 1 %}
+              {% if next_index >= sibling_ensaios.size %}
+                {% assign next_index = 0 %}
+              {% endif %}
+              {% assign next_ensaio = sibling_ensaios[next_index] %}
+              <div class="ensaio-pagination__inner">
+                <a href="{{ parent_cat.url | relative_url }}" class="inline-link">Ver todos em {{ parent_cat.title }}</a>
+                <a href="{{ next_ensaio.url | relative_url }}" class="ensaio-pagination__next">
+                  <span class="ensaio-pagination__label">PRÓXIMO ENSAIO</span>
+                  <span class="ensaio-pagination__title">{{ next_ensaio.title }} →</span>
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </nav>
+      {% endif %}
+    {% endif %}
+  </div>
+</article>

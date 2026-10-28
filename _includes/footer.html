@@ -1,0 +1,48 @@
+<footer class="site-footer" id="footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__left">
+      <p class="site-footer__copy">{{ site.data.site.copyright | default: "© Mateus Machado Fotografia. Todos os direitos reservados." }}</p>
+    </div>
+
+    <div class="site-footer__center">
+      {% if site.data.site.instagram %}
+        <a href="{{ site.data.site.instagram }}" target="_blank" rel="noopener" class="site-footer__social" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+      {% endif %}
+      {% if site.data.site.whatsapp %}
+        <a href="https://wa.me/{{ site.data.site.whatsapp }}" target="_blank" rel="noopener" class="site-footer__social" aria-label="WhatsApp">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+        </a>
+      {% endif %}
+      {% if site.data.site.email %}
+        <a href="mailto:{{ site.data.site.email }}" class="site-footer__social" aria-label="E-mail">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </a>
+      {% endif %}
+      {% if site.data.site.linktree %}
+        <a href="{{ site.data.site.linktree }}" target="_blank" rel="noopener" class="site-footer__social" aria-label="Links">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="site-footer__right">
+      <a href="{{ site.data.site.instagram | default: '#' }}" target="_blank" rel="noopener" class="site-footer__credit">
+        {{ site.data.site.instagram_handle | default: site.data.site.nome }}
+      </a>
+    </div>
+  </div>
+</footer>

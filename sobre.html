@@ -1,0 +1,99 @@
+---
+layout: page
+title: Sobre
+permalink: /sobre/
+---
+{% assign s = site.data.sobre %}
+{% assign h = site.data.home %}
+{% assign featured_cats = site.categorias | where: "destaque_home", true | sort: "ordem" %}
+
+<section class="about-hero">
+  <div class="container">
+    <div class="about-hero__grid">
+      <div class="about-hero__left reveal-item">
+        <h1 class="about-hero__lead">{{ s.titulo }}</h1>
+      </div>
+
+      <div class="about-hero__center reveal-item">
+        <div class="about-hero__photo">
+          <img src="{{ s.foto | relative_url }}" alt="{{ site.data.site.nome }}">
+        </div>
+      </div>
+
+      <div class="about-hero__right reveal-item">
+        {% if s.bio_intro %}
+          <p class="about-hero__intro">{{ s.bio_intro }}</p>
+        {% endif %}
+        {% assign paragraphs = s.bio_texto | newline_to_br | split: '<br />' %}
+        {% for p in paragraphs %}
+          {% assign clean_p = p | strip %}
+          {% if clean_p != "" %}
+            <p class="about-hero__text">{{ clean_p }}</p>
+          {% endif %}
+        {% endfor %}
+        <div class="about-hero__action">
+          <a href="{{ '/contato/' | relative_url }}" class="inline-link">{{ s.botao_texto | default: "Entre em Contato" }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-shoots section-pad">
+  <div class="container">
+    <div class="section-header reveal-item">
+      <h2 class="section-header__title">{{ s.trabalhos_titulo | default: "Trabalhos Recentes" }}</h2>
+    </div>
+    {% include card-grid.html items=featured_cats variant="overlay" %}
+  </div>
+</section>
+
+{% if h.depoimentos and h.depoimentos.size > 0 %}
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header reveal-item">
+      <h2 class="section-header__title">{{ h.depoimentos_titulo | default: "O Que Dizem" }}</h2>
+      {% if h.depoimentos_subtitulo %}
+        <p class="section-header__subtitle">{{ h.depoimentos_subtitulo }}</p>
+      {% endif %}
+    </div>
+
+    <div class="testimonials-grid">
+      {% for dep in h.depoimentos %}
+        <article class="testimonial-card reveal-item">
+          <blockquote class="testimonial-card__quote">{{ dep.texto }}</blockquote>
+          <div class="testimonial-card__author">
+            {% if dep.foto %}
+              <img src="{{ dep.foto | relative_url }}" alt="{{ dep.nome }}" class="testimonial-card__avatar" loading="lazy">
+            {% endif %}
+            <span class="testimonial-card__name">{{ dep.nome }}</span>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if h.processo_etapas and h.processo_etapas.size > 0 %}
+<section class="process-section">
+  <div class="container">
+    <div class="section-header reveal-item">
+      <h2 class="section-header__title">{{ h.processo_titulo | default: "O Processo" }}</h2>
+      {% if h.processo_subtitulo %}
+        <p class="section-header__subtitle">{{ h.processo_subtitulo }}</p>
+      {% endif %}
+    </div>
+
+    <div class="process-grid">
+      {% for etapa in h.processo_etapas %}
+        <div class="process-step reveal-item">
+          <h3 class="process-step__num">{{ etapa.numero }}</h3>
+          <h3 class="process-step__title">{{ etapa.titulo }}</h3>
+          <p class="process-step__text">{{ etapa.texto }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

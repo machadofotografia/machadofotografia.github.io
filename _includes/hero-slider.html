@@ -1,0 +1,46 @@
+{% assign slides = site.data.home.slides %}
+<section class="hero-slider" id="hero-slider" aria-label="Destaques do portfólio">
+  <div class="hero-slider__track" data-hero-track>
+    {% for slide in slides %}
+      <div class="hero-slider__slide {% if forloop.first %}is-active{% endif %}" data-hero-slide data-index="{{ forloop.index0 }}">
+        {% if slide.imagem_direita and slide.imagem_direita != "" %}
+          <div class="hero-slider__diptych">
+            <div class="hero-slider__pane">
+              <img src="{{ slide.imagem_esquerda | relative_url }}" alt="{{ slide.alt | default: site.title }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+            </div>
+            <div class="hero-slider__pane">
+              <img src="{{ slide.imagem_direita | relative_url }}" alt="{{ slide.alt | default: site.title }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+            </div>
+          </div>
+        {% else %}
+          <div class="hero-slider__single">
+            <img src="{{ slide.imagem_esquerda | relative_url }}" alt="{{ slide.alt | default: site.title }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+          </div>
+        {% endif %}
+        <div class="hero-slider__veil" aria-hidden="true"></div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if slides.size > 1 %}
+    <div class="hero-slider__controls">
+      <button type="button" class="hero-slider__arrow hero-slider__arrow--prev" data-hero-prev aria-label="Slide anterior">
+        <svg width="68" height="16" viewBox="0 0 68 16" fill="none" aria-hidden="true">
+          <line x1="67" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1"/>
+          <polyline points="9,1 1.5,8 9,15" fill="none" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </button>
+
+      <div class="hero-slider__counter" aria-live="polite">
+        <span data-hero-current>1</span> / <span data-hero-total>{{ slides.size }}</span>
+      </div>
+
+      <button type="button" class="hero-slider__arrow hero-slider__arrow--next" data-hero-next aria-label="Próximo slide">
+        <svg width="68" height="16" viewBox="0 0 68 16" fill="none" aria-hidden="true">
+          <line x1="1" y1="8" x2="66" y2="8" stroke="currentColor" stroke-width="1"/>
+          <polyline points="59,1 66.5,8 59,15" fill="none" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </button>
+    </div>
+  {% endif %}
+</section>

@@ -1,0 +1,11 @@
+---
+layout: page
+title: Trabalhos
+permalink: /trabalhos/
+---
+{% assign sorted_cats = site.categorias | sort: "ordem" %}
+<section class="work-page">
+  <div class="container container--wide">
+    {% include card-grid.html items=sorted_cats variant="below" show_meta=false %}
+  </div>
+</section>

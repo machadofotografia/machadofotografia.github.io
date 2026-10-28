@@ -1,0 +1,14 @@
+{% assign photos = include.fotos %}
+{% assign gallery_title = include.title | default: page.title %}
+
+{% if photos and photos.size > 0 %}
+  <div class="masonry-gallery" data-masonry>
+    {% for foto in photos %}
+      <figure class="masonry-gallery__item reveal-item" data-masonry-item>
+        <button type="button" class="masonry-gallery__trigger" data-lightbox-trigger data-lightbox-src="{{ foto | relative_url }}" data-lightbox-alt="{{ gallery_title }} — Foto {{ forloop.index }}" data-lightbox-index="{{ forloop.index0 }}" aria-label="Ampliar foto {{ forloop.index }} de {{ photos.size }}">
+          <img src="{{ foto | relative_url }}" alt="{{ gallery_title }} — Foto {{ forloop.index }}" loading="lazy">
+        </button>
+      </figure>
+    {% endfor %}
+  </div>
+{% endif %}

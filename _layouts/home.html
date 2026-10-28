@@ -1,0 +1,110 @@
+---
+layout: default
+---
+{% assign h = site.data.home %}
+{% assign featured_cats = site.categorias | where: "destaque_home", true | sort: "ordem" %}
+
+{% include hero-slider.html %}
+
+<section class="home-showcase section-pad">
+  <div class="container">
+    {% if h.frase %}
+      <h2 class="home-showcase__quote reveal-item">{{ h.frase }}</h2>
+    {% endif %}
+
+    {% include card-grid.html items=featured_cats variant="overlay" %}
+  </div>
+</section>
+
+<section class="home-about-split">
+  <div class="home-about-split__top">
+    <div class="container">
+      {% if h.frase_secundaria %}
+        <h3 class="home-about-split__quote reveal-item">{{ h.frase_secundaria }}</h3>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="home-about-split__band">
+    <div class="container">
+      <div class="home-about-split__grid">
+        <div class="home-about-split__left reveal-item">
+          <h3 class="home-about-split__title">{{ h.sobre_titulo }}</h3>
+          <p class="home-about-split__text">{{ h.sobre_texto }}</p>
+        </div>
+
+        <div class="home-about-split__center reveal-item">
+          <div class="home-about-split__photo-wrap">
+            <img src="{{ h.sobre_foto | relative_url }}" alt="{{ site.data.site.nome }}" loading="lazy">
+          </div>
+        </div>
+
+        <div class="home-about-split__right reveal-item">
+          <h3 class="home-about-split__highlight">{{ h.sobre_destaque }}</h3>
+          <a href="{{ '/sobre/' | relative_url }}" class="inline-link">{{ h.sobre_botao | default: "Saiba Mais" }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if h.depoimentos and h.depoimentos.size > 0 %}
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header reveal-item">
+      <h2 class="section-header__title">{{ h.depoimentos_titulo | default: "O Que Dizem" }}</h2>
+      {% if h.depoimentos_subtitulo %}
+        <p class="section-header__subtitle">{{ h.depoimentos_subtitulo }}</p>
+      {% endif %}
+    </div>
+
+    <div class="testimonials-grid">
+      {% for dep in h.depoimentos %}
+        <article class="testimonial-card reveal-item">
+          <blockquote class="testimonial-card__quote">{{ dep.texto }}</blockquote>
+          <div class="testimonial-card__author">
+            {% if dep.foto %}
+              <img src="{{ dep.foto | relative_url }}" alt="{{ dep.nome }}" class="testimonial-card__avatar" loading="lazy">
+            {% endif %}
+            <span class="testimonial-card__name">{{ dep.nome }}</span>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if h.processo_etapas and h.processo_etapas.size > 0 %}
+<section class="process-section">
+  <div class="container">
+    <div class="section-header reveal-item">
+      <h2 class="section-header__title">{{ h.processo_titulo | default: "O Processo" }}</h2>
+      {% if h.processo_subtitulo %}
+        <p class="section-header__subtitle">{{ h.processo_subtitulo }}</p>
+      {% endif %}
+    </div>
+
+    <div class="process-grid">
+      {% for etapa in h.processo_etapas %}
+        <div class="process-step reveal-item">
+          <h3 class="process-step__num">{{ etapa.numero }}</h3>
+          <h3 class="process-step__title">{{ etapa.titulo }}</h3>
+          <p class="process-step__text">{{ etapa.texto }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="cta-banner" style="background-image: url('{{ h.cta_imagem | relative_url }}');">
+  <div class="cta-banner__overlay"></div>
+  <div class="container cta-banner__content reveal-item">
+    <h1 class="cta-banner__title">{{ h.cta_titulo | default: "Vamos registrar a sua história" }}</h1>
+    {% if h.cta_texto %}
+      <p class="cta-banner__text">{{ h.cta_texto }}</p>
+    {% endif %}
+    <a href="{{ '/contato/' | relative_url }}" class="inline-link inline-link--light">{{ h.cta_botao | default: "Agendar um Ensaio" }}</a>
+  </div>
+</section>

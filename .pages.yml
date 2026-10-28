@@ -1,0 +1,182 @@
+media:
+  input: media
+  output: /media
+  categories: [image]
+  rename: safe
+
+content:
+  - name: categorias
+    label: Categorias
+    type: collection
+    path: _categorias
+    format: yaml-frontmatter
+    view:
+      fields: [title, modo, ordem, destaque_home]
+      primary: title
+      sort: [ordem]
+    fields:
+      - name: title
+        label: Nome
+        type: string
+        required: true
+      - name: subtitulo
+        label: Subtítulo
+        type: string
+        default: Fotografia
+      - name: capa
+        label: Foto de capa
+        type: image
+        required: true
+      - name: ordem
+        label: Ordem no menu
+        type: number
+        default: 1
+      - name: modo
+        label: Exibição
+        type: select
+        options:
+          values:
+            - { value: galeria, label: "Galeria única" }
+            - { value: ensaios, label: "Dividida por ensaios" }
+        default: galeria
+      - name: destaque_home
+        label: Mostrar na Home
+        type: boolean
+        default: true
+      - name: descricao
+        label: Texto de abertura
+        type: text
+      - name: fotos
+        label: "Fotos (modo galeria)"
+        type: image
+        options:
+          multiple: true
+
+  - name: ensaios
+    label: Ensaios
+    type: collection
+    path: _ensaios
+    format: yaml-frontmatter
+    view:
+      fields: [title, categoria, data, local]
+      primary: title
+      sort: [data]
+    fields:
+      - name: title
+        label: Nome do ensaio
+        type: string
+        required: true
+      - name: categoria
+        label: Categoria
+        type: reference
+        options:
+          collection: categorias
+          value: "{path}"
+          label: "{title}"
+        required: true
+      - name: capa
+        label: Foto de capa
+        type: image
+        required: true
+      - name: data
+        label: Data
+        type: date
+      - name: local
+        label: Local
+        type: string
+      - name: descricao
+        label: Texto
+        type: text
+      - name: fotos
+        label: Fotos
+        type: image
+        options:
+          multiple: true
+
+  - name: config
+    label: Configurações
+    type: group
+    items:
+      - name: site
+        label: Site e redes
+        type: file
+        path: _data/site.yml
+        fields:
+          - { name: nome, label: "Nome no cabeçalho (Logo)", type: string, required: true }
+          - { name: subtitulo_marca, label: "Subtítulo da marca", type: string }
+          - { name: descricao_seo, label: "Descrição para SEO (Google)", type: text }
+          - { name: email, label: "E-mail de contato", type: string }
+          - { name: whatsapp, label: "WhatsApp (apenas números com DDI, ex: 5594991404214)", type: string }
+          - { name: whatsapp_exibicao, label: "Telefone / WhatsApp formatado", type: string }
+          - { name: instagram, label: "URL do Instagram", type: string }
+          - { name: instagram_handle, label: "Arroba do Instagram", type: string }
+          - { name: linktree, label: "URL do Linktree / Links", type: string }
+          - { name: formspree_id, label: "ID do formulário Formspree (ex: xabcdefg)", type: string }
+          - { name: copyright, label: "Texto de rodapé (Copyright)", type: string }
+
+      - name: home
+        label: Home
+        type: file
+        path: _data/home.yml
+        fields:
+          - name: slides
+            label: "Slides do Hero (Tela Cheia)"
+            type: object
+            list: true
+            fields:
+              - { name: imagem_esquerda, label: "Foto principal / esquerda", type: image, required: true }
+              - { name: imagem_direita, label: "Foto direita (opcional — cria díptico igual ao Scale)", type: image }
+              - { name: alt, label: "Descrição da foto", type: string }
+          - { name: frase, label: "Frase principal abaixo do Hero", type: text }
+          - { name: frase_secundaria, label: "Frase secundária antes do Sobre", type: text }
+          - { name: sobre_titulo, label: "Sobre resumido — Título", type: string }
+          - { name: sobre_texto, label: "Sobre resumido — Texto", type: text }
+          - { name: sobre_foto, label: "Sobre resumido — Foto central vertical", type: image }
+          - { name: sobre_destaque, label: "Sobre resumido — Destaque à direita", type: text }
+          - { name: sobre_botao, label: "Sobre resumido — Texto do link", type: string }
+          - { name: depoimentos_titulo, label: "Depoimentos — Título da seção", type: string }
+          - { name: depoimentos_subtitulo, label: "Depoimentos — Subtítulo", type: text }
+          - name: depoimentos
+            label: "Depoimentos de Clientes"
+            type: object
+            list: true
+            fields:
+              - { name: texto, label: "Depoimento", type: text }
+              - { name: nome, label: "Nome do cliente / casal", type: string }
+              - { name: foto, label: "Foto do cliente", type: image }
+          - { name: processo_titulo, label: "O Processo — Título", type: string }
+          - { name: processo_subtitulo, label: "O Processo — Subtítulo", type: text }
+          - name: processo_etapas
+            label: "Etapas do Processo"
+            type: object
+            list: true
+            fields:
+              - { name: numero, label: "Número (ex: 01.)", type: string }
+              - { name: titulo, label: "Título da etapa", type: string }
+              - { name: texto, label: "Descrição", type: text }
+          - { name: cta_titulo, label: "Chamada final (CTA) — Título", type: string }
+          - { name: cta_texto, label: "Chamada final (CTA) — Subtítulo", type: text }
+          - { name: cta_botao, label: "Chamada final (CTA) — Texto do botão", type: string }
+          - { name: cta_imagem, label: "Chamada final (CTA) — Foto de fundo", type: image }
+
+      - name: sobre
+        label: Sobre
+        type: file
+        path: _data/sobre.yml
+        fields:
+          - { name: titulo, label: "Frase de destaque à esquerda", type: text, required: true }
+          - { name: foto, label: "Foto vertical central", type: image, required: true }
+          - { name: bio_intro, label: "Parágrafo inicial (direita)", type: text }
+          - { name: bio_texto, label: "Texto completo (direita)", type: text }
+          - { name: botao_texto, label: "Texto do botão", type: string }
+          - { name: trabalhos_titulo, label: "Título da seção de categorias", type: string }
+
+      - name: contato
+        label: Contato
+        type: file
+        path: _data/contato.yml
+        fields:
+          - { name: titulo, label: "Título", type: string, required: true }
+          - { name: texto, label: "Texto de introdução", type: text }
+          - { name: foto, label: "Foto lateral", type: image, required: true }
+          - { name: botao_enviar, label: "Texto do botão de envio", type: string }

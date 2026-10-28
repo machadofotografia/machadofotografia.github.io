@@ -1,0 +1,38 @@
+title: Machado Fotografia
+description: Portfólio de fotografia de Mateus Machado — Casamentos, Ensaios, Formaturas e Eventos.
+url: https://machadofotografia.github.io
+baseurl: ""
+lang: pt-BR
+markdown: kramdown
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+collections:
+  categorias:
+    output: true
+    permalink: /trabalhos/:name/
+  ensaios:
+    output: true
+    permalink: /ensaios/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: categorias
+    values:
+      layout: categoria
+  - scope:
+      path: ""
+      type: ensaios
+    values:
+      layout: ensaio
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - .pages.yml
+  - vendor
+  - node_modules

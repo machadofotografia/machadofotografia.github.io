@@ -1,0 +1,40 @@
+{% assign formspree_id = site.data.site.formspree_id | strip %}
+<form class="contact-form" id="contact-form"
+  {% if formspree_id != "" %}
+    action="https://formspree.io/f/{{ formspree_id }}" method="POST"
+  {% else %}
+    action="mailto:{{ site.data.site.email }}" method="GET" data-whatsapp="{{ site.data.site.whatsapp }}" data-email="{{ site.data.site.email }}"
+  {% endif %}
+>
+  <div class="contact-form__row contact-form__row--split">
+    <div class="contact-form__field">
+      <label for="contact-nome" class="contact-form__label">Nome *</label>
+      <input type="text" id="contact-nome" name="nome" class="contact-form__input" placeholder="Nome" required>
+    </div>
+    <div class="contact-form__field">
+      <label for="contact-sobrenome" class="contact-form__label">*</label>
+      <input type="text" id="contact-sobrenome" name="sobrenome" class="contact-form__input" placeholder="Sobrenome" required>
+    </div>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-telefone" class="contact-form__label">Telefone / WhatsApp *</label>
+    <input type="tel" id="contact-telefone" name="telefone" class="contact-form__input" required>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-email" class="contact-form__label">E-mail *</label>
+    <input type="email" id="contact-email" name="email" class="contact-form__input" required>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-mensagem" class="contact-form__label">Mensagem *</label>
+    <textarea id="contact-mensagem" name="mensagem" rows="5" class="contact-form__textarea" required></textarea>
+  </div>
+
+  <button type="submit" class="contact-form__submit">
+    {{ site.data.contato.botao_enviar | default: "Enviar Mensagem" }}
+  </button>
+
+  <p class="contact-form__feedback" id="contact-feedback" hidden></p>
+</form>

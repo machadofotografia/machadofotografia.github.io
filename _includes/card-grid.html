@@ -1,0 +1,40 @@
+{% assign items = include.items %}
+{% assign variant = include.variant | default: "overlay" %}
+{% assign show_meta = include.show_meta | default: false %}
+
+<div class="card-grid card-grid--{{ variant }}">
+  {% for item in items %}
+    <article class="portfolio-card portfolio-card--{{ variant }} reveal-item">
+      <a href="{{ item.url | relative_url }}" class="portfolio-card__link">
+        <div class="portfolio-card__media">
+          <img src="{{ item.capa | relative_url }}" alt="{{ item.title }}" loading="lazy">
+          {% if variant == "overlay" %}
+            <div class="portfolio-card__overlay">
+              <h3 class="portfolio-card__title">{{ item.title | upcase }}</h3>
+              {% if item.subtitulo %}
+                <p class="portfolio-card__subtitle">{{ item.subtitulo }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        {% if variant == "below" %}
+          <div class="portfolio-card__caption">
+            <h3 class="portfolio-card__title-below">{{ item.title | upcase }}</h3>
+            {% if show_meta %}
+              <p class="portfolio-card__meta">
+                {% if item.data %}{{ item.data | date: "%d.%m.%Y" }}{% endif %}
+                {% if item.data and item.local %} · {% endif %}
+                {% if item.local %}{{ item.local }}{% endif %}
+              </p>
+            {% elsif item.modo == "ensaios" %}
+              {% assign cat_ensaios = site.ensaios | where: "categoria", item.path %}
+              {% if cat_ensaios.size > 0 %}
+                <p class="portfolio-card__meta">{{ cat_ensaios.size }} {% if cat_ensaios.size == 1 %}ensaio{% else %}ensaios{% endif %}</p>
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endif %}
+      </a>
+    </article>
+  {% endfor %}
+</div>

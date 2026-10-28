@@ -1,0 +1,101 @@
+{% assign sorted_cats = site.categorias | sort: "ordem" %}
+{% assign is_home = false %}
+{% if page.layout == "home" %}
+  {% assign is_home = true %}
+{% endif %}
+
+<header class="site-header {% if is_home %}site-header--overlay{% else %}site-header--solid{% endif %}" id="site-header">
+  <div class="site-header__inner">
+    <nav class="site-nav site-nav--left" aria-label="Menu principal esquerdo">
+      <ul class="site-nav__list">
+        <li class="site-nav__item">
+          <a href="{{ '/' | relative_url }}" class="site-nav__link {% if page.url == '/' %}is-active{% endif %}">HOME</a>
+        </li>
+        <li class="site-nav__item site-nav__item--has-dropdown">
+          <a href="{{ '/trabalhos/' | relative_url }}" class="site-nav__link {% if page.url contains '/trabalhos' or page.url contains '/ensaios' %}is-active{% endif %}" aria-expanded="false">
+            TRABALHOS
+            <svg class="site-nav__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true">
+              <path d="M1 1L4.5 4.5L8 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <ul class="site-nav__dropdown" aria-label="Submenu de categorias">
+            {% for cat in sorted_cats %}
+              <li>
+                <a href="{{ cat.url | relative_url }}" class="site-nav__dropdown-link {% if page.url == cat.url %}is-active{% endif %}">
+                  {{ cat.title | upcase }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="site-header__brand">
+      <a href="{{ '/' | relative_url }}" class="site-header__logo">{{ site.data.site.nome | default: site.title }}</a>
+    </div>
+
+    <nav class="site-nav site-nav--right" aria-label="Menu principal direito">
+      <ul class="site-nav__list">
+        <li class="site-nav__item">
+          <a href="{{ '/sobre/' | relative_url }}" class="site-nav__link {% if page.url contains '/sobre' %}is-active{% endif %}">SOBRE</a>
+        </li>
+        <li class="site-nav__item">
+          <a href="{{ '/contato/' | relative_url }}" class="site-nav__link {% if page.url contains '/contato' %}is-active{% endif %}">CONTATO</a>
+        </li>
+      </ul>
+    </nav>
+
+    <button class="site-header__burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="site-header__burger-line"></span>
+      <span class="site-header__burger-line"></span>
+      <span class="site-header__burger-line"></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu__header">
+    <a href="{{ '/' | relative_url }}" class="site-header__logo">{{ site.data.site.nome | default: site.title }}</a>
+    <button class="mobile-menu__close" type="button" aria-label="Fechar menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  <nav class="mobile-menu__nav" aria-label="Menu mobile">
+    <ul class="mobile-menu__list">
+      <li><a href="{{ '/' | relative_url }}" class="mobile-menu__link {% if page.url == '/' %}is-active{% endif %}">HOME</a></li>
+      <li class="mobile-menu__group">
+        <div class="mobile-menu__group-row">
+          <a href="{{ '/trabalhos/' | relative_url }}" class="mobile-menu__link {% if page.url contains '/trabalhos' or page.url contains '/ensaios' %}is-active{% endif %}">TRABALHOS</a>
+          <button type="button" class="mobile-menu__sub-toggle" aria-expanded="true" aria-label="Alternar categorias">
+            <svg width="12" height="8" viewBox="0 0 9 6" fill="none" aria-hidden="true">
+              <path d="M1 1L4.5 4.5L8 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <ul class="mobile-menu__sublist is-open">
+          {% for cat in sorted_cats %}
+            <li>
+              <a href="{{ cat.url | relative_url }}" class="mobile-menu__sublink {% if page.url == cat.url %}is-active{% endif %}">{{ cat.title | upcase }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+      <li><a href="{{ '/sobre/' | relative_url }}" class="mobile-menu__link {% if page.url contains '/sobre' %}is-active{% endif %}">SOBRE</a></li>
+      <li><a href="{{ '/contato/' | relative_url }}" class="mobile-menu__link {% if page.url contains '/contato' %}is-active{% endif %}">CONTATO</a></li>
+    </ul>
+  </nav>
+  <div class="mobile-menu__footer">
+    {% if site.data.site.instagram %}
+      <a href="{{ site.data.site.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+    {% endif %}
+    {% if site.data.site.whatsapp %}
+      <a href="https://wa.me/{{ site.data.site.whatsapp }}" target="_blank" rel="noopener" aria-label="WhatsApp">WhatsApp</a>
+    {% endif %}
+    {% if site.data.site.email %}
+      <a href="mailto:{{ site.data.site.email }}" aria-label="E-mail">E-mail</a>
+    {% endif %}
+  </div>
+</div>
