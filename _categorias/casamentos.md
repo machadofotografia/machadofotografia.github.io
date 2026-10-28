@@ -1,7 +1,7 @@
 ---
 title: Casamentos
 subtitulo: Fotografia
-capa: /media/port-12.jpg
+capa: /media/CASAMENTO/casamento-39.jpg
 ordem: 1
 modo: ensaios
 destaque_home: true
