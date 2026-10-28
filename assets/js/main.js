@@ -1,26 +1,7 @@
 (() => {
   document.documentElement.classList.add('js-enabled');
 
-  // 1. SmoothScroll (Lenis if loaded and reduced-motion not set)
-  const initSmoothScroll = () => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced || typeof window.Lenis === 'undefined') return;
-    try {
-      const lenis = new window.Lenis({
-        duration: 1.1,
-        smoothWheel: true
-      });
-      const raf = (time) => {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      };
-      requestAnimationFrame(raf);
-    } catch (_) {
-      // Fallback to native smooth scroll
-    }
-  };
-
-  // 2. Mobile Menu & Dropdowns
+  // 1. Mobile Menu & Dropdowns
   const initMenu = () => {
     const burger = document.querySelector('.site-header__burger');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -335,7 +316,6 @@
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    initSmoothScroll();
     initMenu();
     initHeroSlider();
     initMasonry();
