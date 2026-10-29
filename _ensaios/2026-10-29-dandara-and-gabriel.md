@@ -3,6 +3,7 @@ title: DANDARA & GABRIEL
 categoria: _categorias/casamentos.md
 capa: /media/dandara-e-gabriel-1.jpg
 data: 2025-07-19
+local: TAQUARUÇU
 fotos:
   - /media/dandara-e-gabriel-1-1.jpg
   - /media/dandara-e-gabriel-2.jpg
