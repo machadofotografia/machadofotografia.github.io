@@ -3,7 +3,7 @@ title: ILANA & PEDRO
 categoria: _categorias/casamentos.md
 capa: /media/ilana-e-pedro-11.jpg
 data: 2026-06-26
-local: Palmas-TO
+local: Santuário Mãe Rainha
 fotos:
   - /media/CASAMENTO/ilana-e-pedro-1.jpg
   - /media/CASAMENTO/ilana-e-pedro-2.jpg
