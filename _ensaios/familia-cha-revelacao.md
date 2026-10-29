@@ -1,5 +1,5 @@
 ---
-title: CAMILLA E EDRIEL
+title: CAMILLA & EDRIEL
 categoria: _categorias/casamentos.md
 capa: /media/camilla-e-edriel-8.jpg
 data: 2026-09-29
