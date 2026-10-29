@@ -1,3 +1,4 @@
+exibir_hero: true
 slides:
   - imagem_esquerda: /media/port-6.jpg
     imagem_direita: /media/ellen-2.jpg
@@ -8,7 +9,9 @@ slides:
   - imagem_esquerda: /media/camilla-e-edriel-4.jpg
     imagem_direita: /media/ilana-e-pedro-9-1.jpg
     alt: Retratos e histórias especiais registradas com autenticidade
+exibir_showcase: true
 frase: '"Acreditamos em eternizar histórias e momentos que vão durar para sempre"'
+exibir_sobre: true
 frase_secundaria: '"Registrar bem cada instante é transformar sentimentos em
   memórias atemporais."'
 sobre_titulo: Conheça MATEUS
@@ -20,10 +23,12 @@ sobre_foto: /media/about-pic.jpg
 sobre_destaque: '"Olhar sensível, direção leve e autenticidade em cada clique —
   unindo fotografia, design e dedicação aos detalhes..."'
 sobre_botao: Saiba Mais
+exibir_depoimentos: true
 depoimentos_titulo: O Que Dizem
 depoimentos_subtitulo: A maior alegria do nosso trabalho vem das palavras
   sinceras de quem confiou em nosso olhar para eternizar momentos tão
   importantes.
+exibir_processo: true
 processo_titulo: O Processo
 processo_subtitulo: Da nossa primeira conversa até a entrega da galeria final,
   cada etapa é pensada para que sua experiência fotográfica seja leve,
@@ -45,6 +50,7 @@ processo_etapas:
     titulo: Curadoria & Entrega
     texto: Seleção cuidadosa e tratamento de cor autoral, entregues em alta
       resolução para você reviver e compartilhar suas memórias.
+exibir_cta: true
 cta_titulo: Vamos registrar a sua história
 cta_texto: Se você tem um momento especial para viver e recordar, será uma honra
   contá-lo através das minhas lentes. Entre em contato e vamos criar juntos.

@@ -39,6 +39,7 @@ permalink: /sobre/
   </div>
 </section>
 
+{% if s.exibir_trabalhos != false %}
 <section class="about-shoots section-pad">
   <div class="container">
     <div class="section-header reveal-item">
@@ -47,8 +48,9 @@ permalink: /sobre/
     {% include card-grid.html items=featured_cats variant="overlay" %}
   </div>
 </section>
+{% endif %}
 
-{% if h.depoimentos and h.depoimentos.size > 0 %}
+{% if s.exibir_depoimentos != false and h.depoimentos and h.depoimentos.size > 0 %}
 <section class="testimonials-section">
   <div class="container">
     <div class="section-header reveal-item">
@@ -75,7 +77,7 @@ permalink: /sobre/
 </section>
 {% endif %}
 
-{% if h.processo_etapas and h.processo_etapas.size > 0 %}
+{% if s.exibir_processo != false and h.processo_etapas and h.processo_etapas.size > 0 %}
 <section class="process-section">
   <div class="container">
     <div class="section-header reveal-item">

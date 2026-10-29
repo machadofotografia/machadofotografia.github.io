@@ -119,6 +119,7 @@ content:
         type: file
         path: _data/home.yml
         fields:
+          - { name: exibir_hero, label: "Ativar Hero Slider (Tela Cheia)", type: boolean, default: true }
           - name: slides
             label: "Slides do Hero (Tela Cheia)"
             type: object
@@ -127,13 +128,16 @@ content:
               - { name: imagem_esquerda, label: "Foto principal / esquerda", type: image, required: true }
               - { name: imagem_direita, label: "Foto direita (opcional — cria díptico igual ao Scale)", type: image }
               - { name: alt, label: "Descrição da foto", type: string }
+          - { name: exibir_showcase, label: "Ativar Destaques / Categorias", type: boolean, default: true }
           - { name: frase, label: "Frase principal abaixo do Hero", type: text }
+          - { name: exibir_sobre, label: "Ativar Seção Conheça Mateus", type: boolean, default: true }
           - { name: frase_secundaria, label: "Frase secundária antes do Sobre", type: text }
           - { name: sobre_titulo, label: "Sobre resumido — Título", type: string }
           - { name: sobre_texto, label: "Sobre resumido — Texto", type: text }
           - { name: sobre_foto, label: "Sobre resumido — Foto central vertical", type: image }
           - { name: sobre_destaque, label: "Sobre resumido — Destaque à direita", type: text }
           - { name: sobre_botao, label: "Sobre resumido — Texto do link", type: string }
+          - { name: exibir_depoimentos, label: "Ativar Seção Depoimentos", type: boolean, default: true }
           - { name: depoimentos_titulo, label: "Depoimentos — Título da seção", type: string }
           - { name: depoimentos_subtitulo, label: "Depoimentos — Subtítulo", type: text }
           - name: depoimentos
@@ -144,6 +148,7 @@ content:
               - { name: texto, label: "Depoimento", type: text }
               - { name: nome, label: "Nome do cliente / casal", type: string }
               - { name: foto, label: "Foto do cliente", type: image }
+          - { name: exibir_processo, label: "Ativar Seção O Processo", type: boolean, default: true }
           - { name: processo_titulo, label: "O Processo — Título", type: string }
           - { name: processo_subtitulo, label: "O Processo — Subtítulo", type: text }
           - name: processo_etapas
@@ -154,6 +159,7 @@ content:
               - { name: numero, label: "Número (ex: 01.)", type: string }
               - { name: titulo, label: "Título da etapa", type: string }
               - { name: texto, label: "Descrição", type: text }
+          - { name: exibir_cta, label: "Ativar Chamada Final (Banner CTA)", type: boolean, default: true }
           - { name: cta_titulo, label: "Chamada final (CTA) — Título", type: string }
           - { name: cta_texto, label: "Chamada final (CTA) — Subtítulo", type: text }
           - { name: cta_botao, label: "Chamada final (CTA) — Texto do botão", type: string }
@@ -169,7 +175,10 @@ content:
           - { name: bio_intro, label: "Parágrafo inicial (direita)", type: text }
           - { name: bio_texto, label: "Texto completo (direita)", type: text }
           - { name: botao_texto, label: "Texto do botão", type: string }
+          - { name: exibir_trabalhos, label: "Ativar Seção Trabalhos Recentes", type: boolean, default: true }
           - { name: trabalhos_titulo, label: "Título da seção de categorias", type: string }
+          - { name: exibir_depoimentos, label: "Ativar Seção Depoimentos na página Sobre", type: boolean, default: true }
+          - { name: exibir_processo, label: "Ativar Seção O Processo na página Sobre", type: boolean, default: true }
 
       - name: contato
         label: Contato

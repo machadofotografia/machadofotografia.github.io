@@ -4,8 +4,11 @@ layout: default
 {% assign h = site.data.home %}
 {% assign featured_cats = site.categorias | where: "destaque_home", true | sort: "ordem" %}
 
-{% include hero-slider.html %}
+{% if h.exibir_hero != false %}
+  {% include hero-slider.html %}
+{% endif %}
 
+{% if h.exibir_showcase != false %}
 <section class="home-showcase section-pad">
   <div class="container">
     {% if h.frase %}
@@ -15,7 +18,9 @@ layout: default
     {% include card-grid.html items=featured_cats variant="overlay" %}
   </div>
 </section>
+{% endif %}
 
+{% if h.exibir_sobre != false %}
 <section class="home-about-split">
   <div class="home-about-split__top">
     <div class="container">
@@ -47,8 +52,9 @@ layout: default
     </div>
   </div>
 </section>
+{% endif %}
 
-{% if h.depoimentos and h.depoimentos.size > 0 %}
+{% if h.exibir_depoimentos != false and h.depoimentos and h.depoimentos.size > 0 %}
 <section class="testimonials-section">
   <div class="container">
     <div class="section-header reveal-item">
@@ -75,7 +81,7 @@ layout: default
 </section>
 {% endif %}
 
-{% if h.processo_etapas and h.processo_etapas.size > 0 %}
+{% if h.exibir_processo != false and h.processo_etapas and h.processo_etapas.size > 0 %}
 <section class="process-section">
   <div class="container">
     <div class="section-header reveal-item">
@@ -98,6 +104,7 @@ layout: default
 </section>
 {% endif %}
 
+{% if h.exibir_cta != false %}
 <section class="cta-banner" style="background-image: url('{{ h.cta_imagem | relative_url }}');">
   <div class="cta-banner__overlay"></div>
   <div class="container cta-banner__content reveal-item">
@@ -108,3 +115,4 @@ layout: default
     <a href="{{ '/contato/' | relative_url }}" class="inline-link inline-link--light">{{ h.cta_botao | default: "Agendar um Ensaio" }}</a>
   </div>
 </section>
+{% endif %}
