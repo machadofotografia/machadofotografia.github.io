@@ -3,15 +3,15 @@ layout: default
 ---
 <section class="category-page">
   <div class="container container--wide">
-    {% if page.modo == "ensaios" %}
-      <header class="editorial-header reveal-item">
-        <p class="editorial-header__eyebrow">{{ page.subtitulo | default: "Fotografia" | upcase }}</p>
-        <h1 class="editorial-header__title">{{ page.title }}</h1>
-        {% if page.descricao and page.descricao != "" %}
-          <p class="editorial-header__desc">{{ page.descricao }}</p>
-        {% endif %}
-      </header>
+    <header class="editorial-header reveal-item">
+      <p class="editorial-header__eyebrow">{{ page.subtitulo | default: "Fotografia" | upcase }}</p>
+      <h1 class="editorial-header__title">{{ page.title }}</h1>
+      {% if page.descricao and page.descricao != "" %}
+        <p class="editorial-header__desc">{{ page.descricao }}</p>
+      {% endif %}
+    </header>
 
+    {% if page.modo == "ensaios" %}
       {% assign cat_ensaios = site.ensaios | where: "categoria", page.path | sort: "data" | reverse %}
       {% if cat_ensaios.size > 0 %}
         {% include card-grid.html items=cat_ensaios variant="below" show_meta=true %}

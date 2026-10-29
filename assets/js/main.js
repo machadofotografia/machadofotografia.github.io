@@ -7,9 +7,44 @@
     const mobileMenu = document.getElementById('mobile-menu');
     const closeBtn = document.querySelector('.mobile-menu__close');
     const subToggle = document.querySelector('.mobile-menu__sub-toggle');
-    const subList = document.querySelector('.mobile-menu__sublist');
+    const subTrigger = document.querySelector('[data-mobile-sub-trigger]');
+    const subWrap = document.getElementById('mobile-submenu-trabalhos') || document.querySelector('.mobile-menu__subwrap');
+    const desktopDropdown = document.querySelector('.site-nav__item--has-dropdown');
+    const desktopDropdownLink = desktopDropdown ? desktopDropdown.querySelector('.site-nav__link') : null;
+
+    if (desktopDropdown && desktopDropdownLink) {
+      desktopDropdown.addEventListener('mouseenter', () => {
+        desktopDropdownLink.setAttribute('aria-expanded', 'true');
+      });
+      desktopDropdown.addEventListener('mouseleave', () => {
+        desktopDropdownLink.setAttribute('aria-expanded', 'false');
+      });
+      desktopDropdown.addEventListener('focusin', () => {
+        desktopDropdownLink.setAttribute('aria-expanded', 'true');
+      });
+      desktopDropdown.addEventListener('focusout', (e) => {
+        if (!desktopDropdown.contains(e.relatedTarget)) {
+          desktopDropdownLink.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
 
     if (!burger || !mobileMenu) return;
+
+    const setSubmenu = (open) => {
+      if (!subWrap || !subToggle) return;
+      subWrap.classList.toggle('is-open', open);
+      subWrap.setAttribute('aria-hidden', String(!open));
+      subToggle.setAttribute('aria-expanded', String(open));
+      if (subTrigger) subTrigger.setAttribute('aria-expanded', String(open));
+    };
+
+    const toggleSubmenu = (e) => {
+      if (e) e.preventDefault();
+      if (!subWrap) return;
+      const isOpen = subWrap.classList.contains('is-open');
+      setSubmenu(!isOpen);
+    };
 
     const openMenu = () => {
       mobileMenu.classList.add('is-open');
@@ -23,26 +58,36 @@
       mobileMenu.setAttribute('aria-hidden', 'true');
       burger.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
+      setSubmenu(false);
     };
 
     burger.addEventListener('click', openMenu);
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
 
-    if (subToggle && subList) {
-      subToggle.addEventListener('click', () => {
-        const isOpen = subList.classList.toggle('is-open');
-        subToggle.setAttribute('aria-expanded', String(isOpen));
+    if (subToggle) subToggle.addEventListener('click', toggleSubmenu);
+    if (subTrigger) subTrigger.addEventListener('click', toggleSubmenu);
+
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      if (link === subTrigger) return;
+      link.addEventListener('click', () => {
+        closeMenu();
       });
-    }
+    });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
         closeMenu();
       }
     });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1199 && mobileMenu.classList.contains('is-open')) {
+        closeMenu();
+      }
+    });
   };
 
-  // 3. Hero Slider (Swipe, Arrows, Keyboard, Autoplay)
+  // 2. Hero Slider (Swipe, Arrows, Autoplay)
   const initHeroSlider = () => {
     const slider = document.getElementById('hero-slider');
     if (!slider) return;
@@ -56,6 +101,7 @@
     let current = 0;
     let timer = null;
     let touchStartX = 0;
+    let touchStartY = 0;
 
     const goTo = (index) => {
       slides[current].classList.remove('is-active');
@@ -88,12 +134,14 @@
 
     slider.addEventListener('touchstart', (e) => {
       touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
     }, { passive: true });
 
     slider.addEventListener('touchend', (e) => {
-      const diff = e.changedTouches[0].screenX - touchStartX;
-      if (Math.abs(diff) > 45) {
-        if (diff < 0) next();
+      const diffX = e.changedTouches[0].screenX - touchStartX;
+      const diffY = e.changedTouches[0].screenY - touchStartY;
+      if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.2) {
+        if (diffX < 0) next();
         else prev();
         resetAutoplay();
       }
@@ -102,7 +150,7 @@
     resetAutoplay();
   };
 
-  // 4. Masonry Layout (Shortest-column distribution keeping left-to-right order)
+  // 3. Masonry Layout (Shortest-column distribution keeping left-to-right order)
   const initMasonry = () => {
     const containers = Array.from(document.querySelectorAll('[data-masonry]'));
     if (!containers.length) return;
@@ -112,12 +160,14 @@
       if (!originalItems.length) return;
 
       let lastColCount = 0;
+      let rafId = null;
 
       const getColumnCount = () => {
         const w = window.innerWidth;
-        if (w <= 640) return 1;
-        if (w <= 960) return 2;
-        return 3;
+        let maxCols = 3;
+        if (w <= 640) maxCols = 1;
+        else if (w <= 960) maxCols = 2;
+        return Math.min(maxCols, originalItems.length);
       };
 
       const layout = (force = false) => {
@@ -126,6 +176,7 @@
         lastColCount = colCount;
 
         container.innerHTML = '';
+        container.dataset.cols = String(colCount);
         container.style.gridTemplateColumns = `repeat(${colCount}, 1fr)`;
 
         const cols = Array.from({ length: colCount }, () => {
@@ -136,7 +187,6 @@
         });
 
         originalItems.forEach((item) => {
-          // Pick shortest column
           let targetCol = cols[0];
           for (let i = 1; i < cols.length; i++) {
             if (cols[i].height < targetCol.height) {
@@ -152,13 +202,21 @@
         });
       };
 
+      const scheduleRebalance = () => {
+        if (getColumnCount() <= 1) return;
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          rafId = null;
+          layout(true);
+        });
+      };
+
       layout(true);
 
-      // Re-balance as images finish loading their natural dimensions
       originalItems.forEach((item) => {
         const img = item.querySelector('img');
         if (img && !img.complete) {
-          img.addEventListener('load', () => layout(true), { once: true });
+          img.addEventListener('load', scheduleRebalance, { once: true });
         }
       });
 
@@ -170,7 +228,7 @@
     });
   };
 
-  // 5. Lightbox (Fade transition, Keyboard, Swipe, Preload next)
+  // 4. Lightbox (Fade transition, Keyboard, Swipe, Preload next)
   const initLightbox = () => {
     const lightbox = document.getElementById('lightbox');
     if (!lightbox) return;
@@ -191,12 +249,18 @@
     }));
 
     if (totalEl) totalEl.textContent = String(gallery.length);
+    if (gallery.length <= 1) {
+      if (prevBtn) prevBtn.hidden = true;
+      if (nextBtn) nextBtn.hidden = true;
+    }
 
     let currentIndex = 0;
     let isOpen = false;
     let touchStartX = 0;
+    let touchStartY = 0;
 
     const preload = (idx) => {
+      if (gallery.length <= 1) return;
       const target = gallery[(idx + gallery.length) % gallery.length];
       if (!target) return;
       const pre = new Image();
@@ -209,11 +273,14 @@
       if (!item || !imgEl) return;
 
       imgEl.style.opacity = '0.2';
-      imgEl.src = item.src;
-      imgEl.alt = item.alt;
       imgEl.onload = () => {
         imgEl.style.opacity = '1';
       };
+      imgEl.src = item.src;
+      imgEl.alt = item.alt;
+      if (imgEl.complete) {
+        imgEl.style.opacity = '1';
+      }
       if (currentEl) currentEl.textContent = String(currentIndex + 1);
       preload(currentIndex + 1);
       preload(currentIndex - 1);
@@ -249,25 +316,29 @@
     document.addEventListener('keydown', (e) => {
       if (!isOpen) return;
       if (e.key === 'Escape') close();
-      if (e.key === 'ArrowLeft') show(currentIndex - 1);
-      if (e.key === 'ArrowRight') show(currentIndex + 1);
+      if (gallery.length > 1) {
+        if (e.key === 'ArrowLeft') show(currentIndex - 1);
+        if (e.key === 'ArrowRight') show(currentIndex + 1);
+      }
     });
 
     lightbox.addEventListener('touchstart', (e) => {
       touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
     }, { passive: true });
 
     lightbox.addEventListener('touchend', (e) => {
-      if (!isOpen) return;
-      const diff = e.changedTouches[0].screenX - touchStartX;
-      if (Math.abs(diff) > 45) {
-        if (diff < 0) show(currentIndex + 1);
+      if (!isOpen || gallery.length <= 1) return;
+      const diffX = e.changedTouches[0].screenX - touchStartX;
+      const diffY = e.changedTouches[0].screenY - touchStartY;
+      if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.2) {
+        if (diffX < 0) show(currentIndex + 1);
         else show(currentIndex - 1);
       }
     }, { passive: true });
   };
 
-  // 6. Scroll Reveal (IntersectionObserver)
+  // 5. Scroll Reveal (IntersectionObserver)
   const initReveal = () => {
     const items = Array.from(document.querySelectorAll('.reveal-item'));
     if (!items.length) return;
@@ -289,30 +360,76 @@
     items.forEach((el) => observer.observe(el));
   };
 
-  // 7. Contact Form fallback when Formspree ID is not yet set
+  // 6. Contact Form (Formspree AJAX + WhatsApp fallback)
   const initContactForm = () => {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
+    const feedback = document.getElementById('contact-feedback');
+    const submitBtn = form.querySelector('[type="submit"]');
     const whatsapp = form.getAttribute('data-whatsapp');
-    if (!whatsapp) return; // Formspree is active
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nome = (form.querySelector('[name="nome"]')?.value || '').trim();
-      const sobrenome = (form.querySelector('[name="sobrenome"]')?.value || '').trim();
-      const telefone = (form.querySelector('[name="telefone"]')?.value || '').trim();
-      const email = (form.querySelector('[name="email"]')?.value || '').trim();
-      const mensagem = (form.querySelector('[name="mensagem"]')?.value || '').trim();
+    if (whatsapp) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nome = (form.querySelector('[name="nome"]')?.value || '').trim();
+        const sobrenome = (form.querySelector('[name="sobrenome"]')?.value || '').trim();
+        const telefone = (form.querySelector('[name="telefone"]')?.value || '').trim();
+        const email = (form.querySelector('[name="email"]')?.value || '').trim();
+        const mensagem = (form.querySelector('[name="mensagem"]')?.value || '').trim();
 
-      const texto = `Olá Mateus! Meu nome é ${nome} ${sobrenome}.\nTelefone: ${telefone}\nE-mail: ${email}\n\n${mensagem}`;
-      const feedback = document.getElementById('contact-feedback');
-      if (feedback) {
-        feedback.hidden = false;
-        feedback.textContent = 'Redirecionando sua mensagem para o WhatsApp...';
-      }
-      window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener');
-    });
+        const texto = `Olá Mateus! Meu nome é ${nome} ${sobrenome}.\nTelefone: ${telefone}\nE-mail: ${email}\n\n${mensagem}`;
+        if (feedback) {
+          feedback.hidden = false;
+          feedback.textContent = 'Redirecionando sua mensagem para o WhatsApp...';
+        }
+        window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener');
+      });
+      return;
+    }
+
+    if (form.action && form.action.includes('formspree.io')) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const originalLabel = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Enviando...';
+        }
+        if (feedback) {
+          feedback.hidden = true;
+          feedback.textContent = '';
+        }
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' }
+          });
+
+          if (response.ok) {
+            form.reset();
+            if (feedback) {
+              feedback.hidden = false;
+              feedback.textContent = 'Mensagem enviada com sucesso! Responderei o mais breve possível.';
+            }
+          } else {
+            throw new Error('Falha no envio');
+          }
+        } catch (_) {
+          if (feedback) {
+            feedback.hidden = false;
+            feedback.textContent = 'Não foi possível enviar agora. Por favor, tente novamente ou chame pelo WhatsApp.';
+          }
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalLabel;
+          }
+        }
+      });
+    }
   };
 
   document.addEventListener('DOMContentLoaded', () => {

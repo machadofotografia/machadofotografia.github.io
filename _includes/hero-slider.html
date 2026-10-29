@@ -6,15 +6,15 @@
         {% if slide.imagem_direita and slide.imagem_direita != "" %}
           <div class="hero-slider__diptych">
             <div class="hero-slider__pane">
-              <img src="{{ slide.imagem_esquerda | relative_url }}" alt="{{ slide.alt | default: site.title }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+              <img src="{{ slide.imagem_esquerda | relative_url }}" alt="{{ slide.alt | default: site.title }}" {% if forloop.first %}fetchpriority="high"{% else %}decoding="async"{% endif %}>
             </div>
             <div class="hero-slider__pane">
-              <img src="{{ slide.imagem_direita | relative_url }}" alt="{{ slide.alt | default: site.title }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+              <img src="{{ slide.imagem_direita | relative_url }}" alt="{{ slide.alt | default: site.title }}" {% if forloop.first %}fetchpriority="high"{% else %}decoding="async"{% endif %}>
             </div>
           </div>
         {% else %}
           <div class="hero-slider__single">
-            <img src="{{ slide.imagem_esquerda | relative_url }}" alt="{{ slide.alt | default: site.title }}" {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+            <img src="{{ slide.imagem_esquerda | relative_url }}" alt="{{ slide.alt | default: site.title }}" {% if forloop.first %}fetchpriority="high"{% else %}decoding="async"{% endif %}>
           </div>
         {% endif %}
         <div class="hero-slider__veil" aria-hidden="true"></div>

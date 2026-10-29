@@ -30,7 +30,11 @@
               {% assign cat_ensaios = site.ensaios | where: "categoria", item.path %}
               {% if cat_ensaios.size > 0 %}
                 <p class="portfolio-card__meta">{{ cat_ensaios.size }} {% if cat_ensaios.size == 1 %}ensaio{% else %}ensaios{% endif %}</p>
+              {% elsif item.subtitulo %}
+                <p class="portfolio-card__meta">{{ item.subtitulo }}</p>
               {% endif %}
+            {% elsif item.subtitulo %}
+              <p class="portfolio-card__meta">{{ item.subtitulo }}</p>
             {% endif %}
           </div>
         {% endif %}

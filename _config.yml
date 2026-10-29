@@ -34,5 +34,8 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - .pages.yml
+  - .agents
+  - AGENTS.md
+  - GEMINI.md
   - vendor
   - node_modules
