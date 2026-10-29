@@ -2,7 +2,6 @@
 title: CATAPRATU
 categoria: _categorias/ensaios.md
 capa: /media/lapaglia-9.jpg
-data: 2026-10-29
 local: LORENZO
 fotos:
   - /media/lapaglia-6-2.jpg
