@@ -2,7 +2,7 @@
 title: ILANA E PEDRO
 categoria: _categorias/casamentos.md
 capa: /media/ilana-e-pedro-11.jpg
-data: 2024-08-18
+data: 2026-06-26
 local: Palmas-TO
 fotos:
   - /media/CASAMENTO/ilana-e-pedro-1.jpg
