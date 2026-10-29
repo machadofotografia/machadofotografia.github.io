@@ -1,5 +1,5 @@
 ---
-title: ILANA E PEDRO
+title: ILANA & PEDRO
 categoria: _categorias/casamentos.md
 capa: /media/ilana-e-pedro-11.jpg
 data: 2026-06-26
