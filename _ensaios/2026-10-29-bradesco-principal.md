@@ -2,7 +2,6 @@
 title: Bradesco principal
 categoria: _categorias/eventos.md
 capa: /media/bradesco-8.jpg
-data: 2026-10-29
 local: Inauguração
 fotos:
   - /media/bradesco-10.jpg
