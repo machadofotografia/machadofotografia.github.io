@@ -2,6 +2,8 @@
 title: INOVA CASH
 categoria: _categorias/eventos.md
 capa: /media/bradesco-13.jpg
+data: 2026-10-29
+local: Inova Cash
 fotos:
   - /media/bradesco-12.jpg
   - /media/bradesco-13-1.jpg
