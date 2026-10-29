@@ -1,12 +1,10 @@
 ---
 title: Eventos
 subtitulo: Fotografia
-capa: /media/port-14.jpg
+capa: /media/tfw-3.jpg
 ordem: 3
-modo: galeria
+modo: ensaios
 destaque_home: true
 descricao: Cobertura fotográfica de formaturas, aniversários de 15 anos,
   conquistas acadêmicas e celebrações inesquecíveis.
-fotos:
-  - /media/port-4.jpg
 ---
