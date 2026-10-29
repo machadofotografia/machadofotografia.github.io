@@ -3,6 +3,7 @@ title: MARCELA & JOÃO VITOR
 categoria: _categorias/casamentos.md
 capa: /media/marcela-1.jpg
 data: 2025-11-09
+local: Paróquia Santa Tereza
 fotos:
   - /media/marcela-3.jpg
   - /media/marcela-1-1.jpg
