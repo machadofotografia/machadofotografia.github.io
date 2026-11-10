@@ -2,6 +2,7 @@
 title: IT CONCEITO
 categoria: _categorias/ensaios.md
 capa: /media/it-8.jpg
+local: Palmas-TO
 fotos:
   - /media/it-13.jpg
   - /media/it-11.jpg
